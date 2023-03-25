@@ -11,7 +11,7 @@ void Chat::showMenu()
 		std::cout << "Войти 2" << std::endl;
 		std::cout << "Закрыть 3" << std::endl;
 		std::cin >> select;
-		// делаем выборку действий на стартовой панели пользователем
+		// панель выбора для пользователя
 		switch (select)
 		{
 		case '1':			
