@@ -1,17 +1,17 @@
-#include "Chat.h"
+п»ї#include "Chat.h"
 #include<iostream>
 
 void Chat::showMenu()
 {
-	currentUser = nullptr; //убираем указатель с выбранного юзера
+	currentUser = nullptr; //СѓР±РёСЂР°РµРј СѓРєР°Р·Р°С‚РµР»СЊ СЃ РІС‹Р±СЂР°РЅРЅРѕРіРѕ СЋР·РµСЂР°
 	char select;
 	while (!currentUser && isWork) {
-		std::cout << "Выберите одно из дествий и нажмите ввод" << std::endl;
-		std::cout << "Зарегестрироваться 1" << std::endl;
-		std::cout << "Войти 2" << std::endl;
-		std::cout << "Закрыть 3" << std::endl;
+		std::cout << "Р’С‹Р±РµСЂРёС‚Рµ РѕРґРЅРѕ РёР· РґРµСЃС‚РІРёР№ Рё РЅР°Р¶РјРёС‚Рµ РІРІРѕРґ" << std::endl;
+		std::cout << "Р—Р°СЂРµРіРµСЃС‚СЂРёСЂРѕРІР°С‚СЊСЃСЏ 1" << std::endl;
+		std::cout << "Р’РѕР№С‚Рё 2" << std::endl;
+		std::cout << "Р—Р°РєСЂС‹С‚СЊ 3" << std::endl;
 		std::cin >> select;
-		// панель выбора для пользователя
+		// РїР°РЅРµР»СЊ РІС‹Р±РѕСЂР° РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 		switch (select)
 		{
 		case '1':			
@@ -22,7 +22,7 @@ void Chat::showMenu()
 			isWork = false;
 			break;
 		default:
-			std::cout << "Выберано некорректное дествие" << std::endl;
+			std::cout << "Р’С‹Р±РµСЂР°РЅРѕ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ РґРµСЃС‚РІРёРµ" << std::endl;
 			break;
 		}
 

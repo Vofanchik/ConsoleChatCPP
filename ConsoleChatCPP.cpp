@@ -1,13 +1,13 @@
-#include <iostream>
+п»ї#include <iostream>
 #include "Chat.h"
 
 int main()
 {
 	setlocale(LC_ALL, "Russian");
 	Chat chat;
-	chat.run(); // меняем переменную isWork на true
+	chat.run(); // РјРµРЅСЏРµРј РїРµСЂРµРјРµРЅРЅСѓСЋ isWork РЅР° true
 
-	while (chat.isChatWork()) // цикл работы чата
+	while (chat.isChatWork()) // С†РёРєР» СЂР°Р±РѕС‚С‹ С‡Р°С‚Р°
 	{
 		chat.showMenu();
 	}
