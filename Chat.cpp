@@ -3,6 +3,7 @@
 
 void Chat::showMenu()
 {
+
 	currentUser = nullptr; //убираем указатель с выбранного юзера
 	char select;
 	while (!currentUser && isWork) {
