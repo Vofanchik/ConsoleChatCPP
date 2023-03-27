@@ -2,13 +2,14 @@
 #include <vector>
 #include "Message.h"
 #include "User.h"
+using namespace std;
 
 class Chat
 {
 	bool isWork = false;
 
-	std::vector<User> users;
-	std::vector<Message> messages;
+	vector<User> users;
+	vector<Message> messages;
 	User* currentUser = nullptr;
 
 public:
@@ -16,6 +17,9 @@ public:
 	bool isChatWork()const {return isWork;}
 	void run() { isWork = true; }
 	void showMenu();
+	void showUserMenu();
+	void signUp();
+	void showUsers();
 
 };
 
