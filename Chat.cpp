@@ -20,6 +20,7 @@ void Chat::showMenu()
 			signUp();
 			break;
 		case '2':
+			signIn();
 			break;
 		case '3':
 			isWork = false;
@@ -74,6 +75,22 @@ void Chat::signUp() {
 	users.push_back(user);
 	currentUser = &user;
 	showUserMenu();
+}
+
+void Chat::signIn() {
+	string login, password;
+	cout << "Логин: ";
+	cin >> login;
+	cout << "Пароль:";
+	cin >> password;
+
+	for (int i = 0; i < users.size(); i++) {
+		if ((users[i].GetUserLogin() == login) && (users[i].GetUserPassword() == password)) {
+			currentUser = &users[i];
+				showUserMenu();
+		}
+	}
+	cout << "Логин или пароль не верен";
 }
 
 void Chat::showUsers() {

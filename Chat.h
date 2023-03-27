@@ -19,6 +19,7 @@ public:
 	void showMenu();
 	void showUserMenu();
 	void signUp();
+	void signIn();
 	void showUsers();
 
 };
