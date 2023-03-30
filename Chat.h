@@ -21,6 +21,7 @@ public:
 	void signUp();
 	void signIn();
 	void showUsers();
-
+	void addMessage();
+	void showChat();
 };
 
