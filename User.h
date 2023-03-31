@@ -11,9 +11,11 @@ public:
 	const string& GetUserLogin(){
 		return login_;
 	}
+
 	const string& GetUserPassword(){
 		return password_;
 	}
+
 	//Hello
 
 	//~User() {};

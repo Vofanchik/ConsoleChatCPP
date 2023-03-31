@@ -4,6 +4,15 @@
 #include<iostream>
 using namespace std;
 
+User* Chat::ReturnUserByLogin(const string& login) {
+	for (auto& user : users) {
+		if (login == user.GetUserLogin())
+			return &user;
+	}
+
+	return nullptr;
+}
+
 void Chat::showMenu()
 {
 
@@ -66,7 +75,6 @@ void Chat::showUserMenu() {
 	}
 }
 
-
 void Chat::signUp() {
 	string login, password;
 	cout << "Логин: ";
@@ -108,24 +116,25 @@ void Chat::showUsers() {
 	}
 	cout << "---------" << endl;
 }
+
 void Chat::addMessage() {
 	string to, text;
 	cout << "Кому (всем или имя):";
 	cin >> to;
 	cout << "Текст:";
 	cin >> text;
-	cin.ignore();
-	getline(cin, text);
+	//cin.ignore();
+	//getline(cin, text);
 
-	if (!(to = "all" || GetUserLogin(to)))//если не удалось найти получателя по имени
+	if (!(to == "all" || ReturnUserByLogin(to)))//если не удалось найти получателя по имени
 	{
 		cout << "Error send message:cannt find" << to << endl;
 			return;
 	}
 	if (to=="all")
-		messages.push_back(Message{ currentUser_->GetUserLogin(),"all",text });
+		messages.push_back(Message{ currentUser->GetUserLogin(),"all",text });
 	else
-		messages.push_back(Message{ currentUser_->GetUserLogin(),GetUserLogin(to)->GetUserLogin(),text });
+		messages.push_back(Message{ currentUser->GetUserLogin(),ReturnUserByLogin(to)->GetUserLogin(),text });
 }
 void Chat::showChat()
 {
@@ -134,21 +143,22 @@ void Chat::showChat()
 	cout << "---Письма---" << endl;
 	for (auto& mess : messages)
 	{//показывает сообщения от текущего пользователя,для него,для всех
-		if (currentUser_->GetUserLogin() == mess.GetFrom() || currentUser_->getUserLogin() == mess.GetTo() || mess.GetTo() == "all")
+		if (currentUser->GetUserLogin() == mess.GetFrom() || currentUser->GetUserLogin() == mess.GetTo() || mess.GetTo() == "all")
 		{// подменяем для себя имя на me
-			from = (currentUser_->GetUserLogin() == mess.GetFrom()) ? "me" : GetUserLogin(mess.GetFrom())->GetUserName();
+			from = (currentUser->GetUserLogin() == mess.GetFrom()) ? "me" : mess.GetFrom();
 			if (mess.GetTo() == "all")
 			{
 				to = "(all)";
 			}
 			else
 			{
-				to = (currentUser_->GetUserLogin() == mess.GetTo()) ? "me" : GetUserLogin(mess.GetTo())->GetUserName();
+				to = (currentUser->GetUserLogin() == mess.GetTo()) ? "me" : mess.GetTo();
 			}
-			cout << "Сообщение от:" << from << "Kому:" << to << endl;
-			cout << "Текст:" << mess.GetText() << endl;
+			cout << "Сообщение от: " << from <<endl<< "Kому: " << to << endl;
+			cout << "Текст: " << mess.GetText() << endl;
 		}
 		cout << "-------------" << endl;
 	}
 }
+
   

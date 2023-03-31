@@ -11,11 +11,13 @@ class Chat
 	vector<User> users;
 	vector<Message> messages;
 	User* currentUser = nullptr;
+	User* acceptorUser = nullptr;
 
 public:
 	
 	bool isChatWork()const {return isWork;}
 	void run() { isWork = true; }
+	User* ReturnUserByLogin(const string& login);
 	void showMenu();
 	void showUserMenu();
 	void signUp();
