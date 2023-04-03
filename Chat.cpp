@@ -21,11 +21,12 @@ void Chat::showMenu()
 	char select;
 	while (!currentUser && isWork) {
 		cout << "Выберите одно из действий и нажмите ввод" << std::endl;
-		cout << "Зарегестрироваться 1" << std::endl;
+		cout << "Зарегистрироваться 1" << std::endl; // зарегистрироваться
 		cout << "Войти 2" << std::endl;
 		cout << "Закрыть 3" << std::endl;
 		cin >> select;
 		// панель выбора для пользователя
+	
 		switch (select)
 		{
 		case '1':
