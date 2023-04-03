@@ -2,6 +2,7 @@
 #include "User.h"
 #include "Message.h"
 #include<iostream>
+#include<string>
 using namespace std;
 
 User* Chat::ReturnUserByLogin(const string& login) {
@@ -122,9 +123,10 @@ void Chat::addMessage() {
 	cout << "Кому (всем или имя):";
 	cin >> to;
 	cout << "Текст:";
-	cin >> text;
-	//cin.ignore();
-	//getline(cin, text);
+	//cin >> text;
+	cin.ignore();
+	getline(cin, text);
+
 
 	if (!(to == "all" || ReturnUserByLogin(to)))//если не удалось найти получателя по имени
 	{
