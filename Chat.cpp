@@ -16,6 +16,8 @@ User* Chat::ReturnUserByLogin(const string& login) {
 
 void Chat::showMenu()
 {
+	// объявляю функцию которая добавляет парочку аккаунтов для теста 
+	Scope();
 
 	currentUser = nullptr; //убираем указатель с выбранного юзера
 	char select;
@@ -30,7 +32,12 @@ void Chat::showMenu()
 		switch (select)
 		{
 		case '1':
-			signUp();
+			// проверка на наличие уже зарегистрированного пользователя ранее (код написан как исключение)
+			try {
+				signUp();
+			}catch (const string ex) {
+				cout << "Такой пользователь уже зарегистрирован! (введите новый логин и пароль)" << endl;
+			}
 			break;
 		case '2':
 			signIn();
@@ -65,6 +72,7 @@ void Chat::showUserMenu() {
 			addMessage();
 			break;
 		case '3':
+			cout << "Список пользователей: " << endl;
 			showUsers();
 			break;
 		case'4':
@@ -76,35 +84,50 @@ void Chat::showUserMenu() {
 		}
 	}
 }
-
+	// функция для теста (зареганные пользователи)
+	void Chat::Scope() {
+		// для теста добавил в вектор users пользователей (типа они были зарегистрированны ранее)
+	// после сверки и соответствия логина и пароля - показ меню для написания сообщения
+		users.push_back({ "Denis", "1" });
+		users.push_back({ "Olya", "2" });
+		users.push_back({ "Vladimir", "3" });
+	}
 void Chat::signUp() {
 	string login, password;
 	cout << "Логин: ";
 	cin >> login;
 	cout << "Пароль:";
 	cin >> password;
-	
 
+
+for (int i = 0; i < users.size(); i++) {
+		if ((users[i].GetUserLogin() == login) && (users[i].GetUserPassword() == password)) {
+			// throw ловит исключение по уже зарегистрированному пользователю (для примера выше добавлен код)
+			// если нет такого в базе то показ меню для написания сообщения в противном случае - пользователь зарегистрирован ранее
+			throw login;
+			showUserMenu();
+		}
+	}
 	User user = User(login, password);
 	users.push_back(user);
 	currentUser = &user;
 	showUserMenu();
 }
-
+// войти в текущий аккаунт
 void Chat::signIn() {
 	string login, password;
 	cout << "Логин: ";
 	cin >> login;
 	cout << "Пароль:";
 	cin >> password;
-
+	
 	for (int i = 0; i < users.size(); i++) {
 		if ((users[i].GetUserLogin() == login) && (users[i].GetUserPassword() == password)) {
 			currentUser = &users[i];
-				showUserMenu();
+			showUserMenu();
+			
 		}
 	}
-	cout << "Логин или пароль не верен";
 }
 
 void Chat::showUsers() {
@@ -114,7 +137,6 @@ void Chat::showUsers() {
 		if (currentUser->GetUserLogin() == users[i].GetUserLogin())
 			cout << "*";
 		cout << endl;
-
 	}
 	cout << "---------" << endl;
 }
@@ -124,16 +146,19 @@ void Chat::addMessage() {
 	cout << "Кому (всем или имя):";
 	cin >> to;
 	cout << "Текст:";
-	//cin >> text;
+	cin >> text;
+	cout << "Сообщение отправлено!"<< endl;
 	cin.ignore();
 	getline(cin, text);
 
 
+
 	if (!(to == "all" || ReturnUserByLogin(to)))//если не удалось найти получателя по имени
 	{
-		cout << "Error send message:cannt find" << to << endl;
+		cout << "Error send message:cannot find" << to << endl;
 			return;
 	}
+
 	if (to=="all")
 		messages.push_back(Message{ currentUser->GetUserLogin(),"all",text });
 	else
@@ -163,5 +188,3 @@ void Chat::showChat()
 		cout << "-------------" << endl;
 	}
 }
-
-  

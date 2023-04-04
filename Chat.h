@@ -9,12 +9,13 @@ class Chat
 	bool isWork = false;
 
 	vector<User> users;
+
 	vector<Message> messages;
 	User* currentUser = nullptr;
 	User* acceptorUser = nullptr;
 
 public:
-	
+	void Scope();
 	bool isChatWork()const {return isWork;}
 	void run() { isWork = true; }
 	User* ReturnUserByLogin(const string& login);
