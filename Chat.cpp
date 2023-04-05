@@ -17,7 +17,7 @@ User* Chat::ReturnUserByLogin(const string& login) {
 void Chat::showMenu()
 {
 	// объявляю функцию которая добавляет парочку аккаунтов для теста 
-	Scope();
+	//Scope();
 
 	currentUser = nullptr; //убираем указатель с выбранного юзера
 	char select;
@@ -35,12 +35,18 @@ void Chat::showMenu()
 			// проверка на наличие уже зарегистрированного пользователя ранее (код написан как исключение)
 			try {
 				signUp();
-			}catch (const string ex) {
-				cout << "Такой пользователь уже зарегистрирован! (введите новый логин и пароль)" << endl;
+			}catch (UserLoginExp& ex) {
+				cout << ex.what();
+				//cout << "Такой пользователь уже зарегистрирован! (введите новый логин и пароль)" << endl;
 			}
 			break;
 		case '2':
-			signIn();
+			try {
+				signIn();
+			}
+			catch (UserloginExp& ex) {
+				cout << ex.what();
+			}
 			break;
 		case '3':
 			isWork = false;
@@ -69,7 +75,13 @@ void Chat::showUserMenu() {
 			currentUser = nullptr;
 			break;
 		case '2':
-			addMessage();
+			try
+			{
+				addMessage();
+			}
+			catch (UserSearchExp& ex) {
+			cout << ex.what();
+			}			
 			break;
 		case '3':
 			cout << "Список пользователей: " << endl;
@@ -104,8 +116,8 @@ for (int i = 0; i < users.size(); i++) {
 		if ((users[i].GetUserLogin() == login) && (users[i].GetUserPassword() == password)) {
 			// throw ловит исключение по уже зарегистрированному пользователю (для примера выше добавлен код)
 			// если нет такого в базе то показ меню для написания сообщения в противном случае - пользователь зарегистрирован ранее
-			throw login;
-			showUserMenu();
+			throw UserLoginExp();
+			//showUserMenu();
 		}
 	}
 	User user = User(login, password);
@@ -124,10 +136,11 @@ void Chat::signIn() {
 	for (int i = 0; i < users.size(); i++) {
 		if ((users[i].GetUserLogin() == login) && (users[i].GetUserPassword() == password)) {
 			currentUser = &users[i];
-			showUserMenu();
-			
+			showUserMenu();			
 		}
 	}
+
+	throw UserloginExp();
 }
 
 void Chat::showUsers() {
@@ -145,19 +158,17 @@ void Chat::addMessage() {
 	string to, text;
 	cout << "Кому (всем или имя):";
 	cin >> to;
-	cout << "Текст:";
-	cin >> text;
-	cout << "Сообщение отправлено!"<< endl;
-	cin.ignore();
-	getline(cin, text);
-
-
 
 	if (!(to == "all" || ReturnUserByLogin(to)))//если не удалось найти получателя по имени
 	{
-		cout << "Error send message:cannot find" << to << endl;
-			return;
+		throw UserSearchExp();			
 	}
+
+	cout << "Текст:";
+	cin >> text;
+	cout << "Сообщение отправлено!" << endl;
+	cin.ignore();
+	getline(cin, text);
 
 	if (to=="all")
 		messages.push_back(Message{ currentUser->GetUserLogin(),"all",text });

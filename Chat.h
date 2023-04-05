@@ -2,7 +2,35 @@
 #include <vector>
 #include "Message.h"
 #include "User.h"
+#include <exception>
 using namespace std;
+
+class UserLoginExp: public exception
+{
+public:
+	virtual const char* what() const noexcept override
+	{
+		return "Ошибка: Такой пользователь уже зарегистрирован! \n";
+	}
+};
+
+class UserSearchExp : public exception
+{
+public:
+	virtual const char* what() const noexcept override
+	{
+		return "Ошибка: Такой пользователь отсутствует! \n";
+	}
+};
+
+class UserloginExp : public exception
+{
+public:
+	virtual const char* what() const noexcept override
+	{
+		return "Ошибка: Логин или пароль не верны! \n";
+	}
+};
 
 class Chat
 {
